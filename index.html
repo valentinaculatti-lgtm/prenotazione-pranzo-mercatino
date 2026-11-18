@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pranzo Mercatino di Natale 2026 - Pro Loco San Didero</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts per richiamare lo stile calligrafico del volantino e garantire massima leggibilità -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- QRCode.js per generazione dinamica del Codice QR scaricabile -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --christmas-red: #b91c1c;
+      --christmas-red-dark: #991b1b;
+      --pine-green: #166534;
+      --parchment-bg: #fef3c7;
+      --sky-top: #7dd3fc;
+      --sky-mid: #e0f2fe;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(180deg, #60a5fa 0%, #bae6fd 22%, #f0f9ff 55%, #ffffff 100%);
+      min-height: 100vh;
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+
+    .font-festive {
+      font-family: 'Great Vibes', cursive;
+    }
+
+    /* Sfondo neve leggero e decorativo */
+    .snow-pattern {
+      background-image: 
+        radial-gradient(circle at 20px 30px, rgba(255, 255, 255, 0.85) 2px, transparent 3px),
+        radial-gradient(circle at 80px 70px, rgba(255, 255, 255, 0.7) 1.5px, transparent 2.5px),
+        radial-gradient(circle at 140px 25px, rgba(255, 255, 255, 0.9) 2.5px, transparent 3.5px),
+        radial-gradient(circle at 200px 90px, rgba(255, 255, 255, 0.6) 2px, transparent 3px);
+      background-size: 240px 120px;
+    }
+
+    /* Stile riquadro Pergamena Menù come nel volantino */
+    .parchment-card {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
+      border: 3px solid #166534;
+      box-shadow: 0 10px 25px -5px rgba(22, 101, 52, 0.18), inset 0 0 20px rgba(217, 119, 6, 0.12);
+      position: relative;
+    }
+
+    .parchment-card::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1.5px dashed #b91c1c;
+      border-radius: 0.75rem;
+      pointer-events: none;
+    }
+
+    /* Animazione leggera fiocchi di neve fluttuanti */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(5deg); }
+    }
+    .animate-float {
+      animation: floatSlow 4s ease-in-out infinite;
+    }
+
+    /* Nasconde scrollbar orizzontale su tabelle responsive */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="snow-pattern antialiased selection:bg-red-200 selection:text-red-900">
+
+  <!-- Barra di Navigazione Superiore / Switch Viste -->
+  <nav class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-sky-200 shadow-sm">
+    <div class="max-w-5xl mx-auto px-3 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-2">
+      <!-- Badge Pro Loco San Didero -->
+      <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchTab('form')">
+        <div class="w-9 h-9 rounded-xl bg-red-700 text-white flex items-center justify-center shadow-sm border border-amber-300 shrink-0">
+          <!-- Icona Torre / Castello stilizzata Pro Loco San Didero -->
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l3-2 3 2v4h2V5l3-2 3 2v16M9 21v-4a2 2 0 012-2h2a2 2 0 012 2v4"/>
+          </svg>
+        </div>
+        <div>
+          <span class="block text-xs font-extrabold uppercase tracking-wider text-green-800 leading-none">Pro Loco San Didero</span>
+          <span class="block text-sm font-bold text-slate-800 leading-tight">Mercatino di Natale 2026</span>
+        </div>
+      </div>
+
+      <!-- Pulsanti Navigazione Viste -->
+      <div class="flex items-center gap-1.5 sm:gap-2 bg-sky-100/80 p-1 rounded-xl border border-sky-200">
+        <button id="nav-form" onclick="switchTab('form')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all bg-red-700 text-white shadow-sm flex items-center gap-1.5">
+          <span>🎄</span> <span>Prenota</span>
+        </button>
+        <button id="nav-qr" onclick="switchTab('qr')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all text-slate-700 hover:bg-white/80 flex items-center gap-1.5">
+          <span>📱</span> <span>Link & QR</span>
+        </button>
+        <button id="nav-admin" onclick="switchTab('admin')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all text-slate-700 hover:bg-white/80 flex items-center gap-1.5">
+          <span>📋</span> <span>Gestionale</span>
+          <span id="badge-count" class="ml-0.5 px-1.5 py-0.2 bg-green-700 text-white text-[10px] rounded-full font-extrabold">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENITORE PRINCIPALE -->
+  <main class="max-w-5xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
+
+    <!-- ========================================================= -->
+    <!-- VISTA 1: FORM DI PRENOTAZIONE PUBBLICO                    -->
+    <!-- ========================================================= -->
+    <section id="view-form" class="space-y-6">
+      
+      <!-- Header Festivo Ispirato al Volantino -->
+      <header class="text-center relative pt-2 pb-2">
+        <!-- Decorazione rami di pino e bacche SVG -->
+        <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-white/90 border border-sky-200 shadow-sm text-xs sm:text-sm font-extrabold text-green-800 mb-2">
+          <span>❄️</span>
+          <span>PRO LOCO DI SAN DIDERO • COMUNE DI SAN DIDERO</span>
+          <span>❄️</span>
+        </div>
+
+        <h1 class="font-festive text-5xl sm:text-7xl text-red-700 drop-shadow-[0_2px_2px_rgba(255,255,255,0.9)] leading-tight">
+          Mercatino di Natale
+        </h1>
+        <p class="text-lg sm:text-2xl font-extrabold text-green-900 -mt-1">
+          Prenotazione Pranzo al Centro Polivalente
+        </p>
+
+        <!-- Pillole Data, Ora e Luogo come nel volantino -->
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+          <div class="bg-white/95 border-2 border-red-700/20 px-4 py-2 rounded-2xl shadow-sm flex items-center gap-2">
+            <span class="text-lg">📅</span>
+            <div class="text-left">
+              <div class="text-[11px] uppercase font-bold text-slate-500 leading-none">Quando</div>
+              <div class="text-sm sm:text-base font-extrabold text-red-700">Sabato 12 Dicembre 2026 • ore 12:30</div>
+            </div>
+          </div>
+          <div class="bg-white/95 border-2 border-green-700/20 px-4 py-2 rounded-2xl shadow-sm flex items-center gap-2">
+            <span class="text-lg">📍</span>
+            <div class="text-left">
+              <div class="text-[11px] uppercase font-bold text-slate-500 leading-none">Dove</div>
+              <div class="text-sm sm:text-base font-extrabold text-green-800">Centro Polivalente • Piazza Europa</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Griglia a 2 colonne su desktop: Sinistra Menù Pergamena, Destra Form -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- COLONNA SINISTRA: RIQUADRO PERGAMENA MENÙ PRANZO -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="parchment-card rounded-2xl p-5 sm:p-6 text-center">
+            <!-- Decorazione ghirlanda superiore -->
+            <div class="flex justify-center items-center gap-2 mb-2">
+              <span class="text-xl animate-float">🎄</span>
+              <span class="px-3 py-0.5 bg-green-800 text-amber-100 text-xs font-extrabold uppercase tracking-widest rounded-full">
+                Menù Pranzo
+              </span>
+              <span class="text-xl animate-float">🎄</span>
+            </div>
+
+            <ul class="space-y-2.5 text-slate-800 font-bold text-base sm:text-lg my-4">
+              <li class="flex items-center justify-center gap-2">
+                <span class="text-red-700">✦</span>
+                <span>Polenta e Spezzatino</span>
+              </li>
+              <li class="flex items-center justify-center gap-2">
+                <span class="text-red-700">✦</span>
+                <span>Panettone o Pandoro</span>
+              </li>
+              <li class="flex items-center justify-center gap-2">
+                <span class="text-red-700">✦</span>
+                <span>Acqua naturale e Caffè</span>
+              </li>
+            </ul>
+
+            <!-- Box Tariffe -->
+            <div class="grid grid-cols-2 gap-3 pt-3 border-t border-amber-400/60">
+              <div class="bg-white/90 rounded-xl p-3 border border-red-200 shadow-sm">
+                <div class="text-xs font-extrabold uppercase text-slate-500">Adulti</div>
+                <div class="text-2xl sm:text-3xl font-black text-red-700">15€</div>
+                <div class="text-[11px] font-semibold text-slate-500">a persona</div>
+              </div>
+              <div class="bg-white/90 rounded-xl p-3 border border-green-200 shadow-sm">
+                <div class="text-xs font-extrabold uppercase text-slate-500">Bambini</div>
+                <div class="text-2xl sm:text-3xl font-black text-green-700">10€</div>
+                <div class="text-[11px] font-semibold text-slate-500">menù bimbi</div>
+              </div>
+            </div>
+
+            <!-- Info Scadenza dal volantino -->
+            <div class="mt-4 text-xs font-bold text-slate-700 bg-white/75 rounded-xl p-2.5 border border-amber-300">
+              🗓️ Prenotazioni consigliate entro il <strong>06/12/2026</strong><br>
+              <span class="text-slate-600 font-semibold">Info anche via WhatsApp: </span>
+              <a href="https://wa.me/393384047634" target="_blank" rel="noopener" class="text-green-800 underline font-extrabold hover:text-green-950">338 404 7634</a>
+            </div>
+          </div>
+
+          <!-- Box Programma Giornata rapido -->
+          <div class="bg-white/90 rounded-2xl p-4 border border-sky-200 shadow-sm text-xs text-slate-600 space-y-1">
+            <div class="font-extrabold text-slate-800 text-sm flex items-center gap-1.5 mb-1">
+              <span>🎅</span> Programma del 12 Dicembre in Piazza Europa
+            </div>
+            <p>• <strong>10:00 - 18:00:</strong> Mercatino, Artigianato, Street Food, Foto con Babbo Natale & Bar degli Elfi</p>
+            <p>• <strong>12:30:</strong> Pranzo al Centro Polivalente</p>
+            <p>• <strong>15:00:</strong> Lettura storie e Laboratorio bambini • <strong>17:00:</strong> Fiaccolata</p>
+          </div>
+        </div>
+
+        <!-- COLONNA DESTRA: MODULO DI PRENOTAZIONE -->
+        <div class="lg:col-span-7">
+          <div id="booking-card" class="bg-white rounded-3xl shadow-xl border-2 border-sky-100 p-5 sm:p-8 relative overflow-hidden">
+            <!-- Bordo superiore decorativo rosso/verde -->
+            <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-red-700 via-green-700 to-red-700"></div>
+
+            <h2 class="text-xl sm:text-2xl font-black text-slate-800 mb-1 flex items-center gap-2">
+              <span>✍️</span> Compila la tua prenotazione
+            </h2>
+            <p class="text-sm text-slate-500 mb-6">Inserisci i tuoi dati e il numero di partecipanti. Pagamento direttamente in loco il giorno dell'evento.</p>
+
+            <form id="booking-form" class="space-y-5" novalidate>
+              <!-- Nome e Cognome -->
+              <div>
+                <label for="fullName" class="block text-sm font-extrabold text-slate-700 mb-1.5">
+                  Nome e Cognome <span class="text-red-600">*</span>
+                </label>
+                <input type="text" id="fullName" required placeholder="Es. Mario Rossi"
+                  class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-red-600 focus:ring-4 focus:ring-red-100 outline-none transition font-semibold text-slate-800 placeholder:text-slate-400">
+              </div>
+
+              <!-- Contatto -->
+              <div>
+                <label for="contact" class="block text-sm font-extrabold text-slate-700 mb-1.5">
+                  Contatto (Telefono / WhatsApp o Email) <span class="text-red-600">*</span>
+                </label>
+                <input type="text" id="contact" required placeholder="Es. 333 1234567 oppure mario@email.it"
+                  class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-red-600 focus:ring-4 focus:ring-red-100 outline-none transition font-semibold text-slate-800 placeholder:text-slate-400">
+              </div>
+
+              <!-- Selettori Adulti e Bambini -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Adulti -->
+                <div class="bg-red-50/70 border-2 border-red-100 rounded-2xl p-4 flex items-center justify-between">
+                  <div>
+                    <div class="font-extrabold text-slate-800 text-base">Adulti</div>
+                    <div class="text-xs font-bold text-red-700">15€ a persona</div>
+                  </div>
+                  <div class="flex items-center gap-2.5">
+                    <button type="button" onclick="updateCount('adults', -1)" aria-label="Riduci adulti"
+                      class="w-10 h-10 rounded-xl bg-white border-2 border-red-200 text-red-700 font-black text-xl hover:bg-red-700 hover:text-white active:scale-95 transition flex items-center justify-center shadow-sm">
+                      −
+                    </button>
+                    <input type="number" id="adults" value="1" min="0" max="50" readonly
+                      class="w-10 text-center font-black text-xl text-slate-800 bg-transparent outline-none">
+                    <button type="button" onclick="updateCount('adults', 1)" aria-label="Aumenta adulti"
+                      class="w-10 h-10 rounded-xl bg-red-700 text-white font-black text-xl hover:bg-red-800 active:scale-95 transition flex items-center justify-center shadow-sm">
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Bambini (senza limite età) -->
+                <div class="bg-green-50/70 border-2 border-green-100 rounded-2xl p-4 flex items-center justify-between">
+                  <div>
+                    <div class="font-extrabold text-slate-800 text-base">Bambini</div>
+                    <div class="text-xs font-bold text-green-700">10€ a bambino</div>
+                  </div>
+                  <div class="flex items-center gap-2.5">
+                    <button type="button" onclick="updateCount('children', -1)" aria-label="Riduci bambini"
+                      class="w-10 h-10 rounded-xl bg-white border-2 border-green-200 text-green-700 font-black text-xl hover:bg-green-700 hover:text-white active:scale-95 transition flex items-center justify-center shadow-sm">
+                      −
+                    </button>
+                    <input type="number" id="children" value="0" min="0" max="50" readonly
+                      class="w-10 text-center font-black text-xl text-slate-800 bg-transparent outline-none">
+                    <button type="button" onclick="updateCount('children', 1)" aria-label="Aumenta bambini"
+                      class="w-10 h-10 rounded-xl bg-green-700 text-white font-black text-xl hover:bg-green-800 active:scale-95 transition flex items-center justify-center shadow-sm">
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Scelta Dolce: Pandoro o Panettone -->
+              <div class="bg-amber-50/70 border-2 border-amber-200 rounded-2xl p-4 space-y-3">
+                <div class="flex flex-wrap items-center justify-between gap-1">
+                  <span class="text-sm font-extrabold text-slate-800 flex items-center gap-1.5">
+                    <span>🍰</span> Scelta del Dolce (incluso nel menù) <span class="text-red-600">*</span>
+                  </span>
+                  <span id="dessert-counter-hint" class="text-xs font-extrabold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full">
+                    Scelti: 1 su 1
+                  </span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <!-- Pandoro -->
+                  <div class="bg-white border border-amber-200 rounded-xl p-3 flex items-center justify-between shadow-sm">
+                    <div>
+                      <div class="font-extrabold text-slate-800 text-sm">⭐ Pandoro</div>
+                      <div class="text-[11px] font-semibold text-slate-500">Porzioni</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <button type="button" onclick="updateDessert('pandoro', -1)" aria-label="Riduci pandoro"
+                        class="w-9 h-9 rounded-lg bg-amber-50 border border-amber-300 text-amber-900 font-black text-lg hover:bg-amber-500 hover:text-white active:scale-95 transition flex items-center justify-center">
+                        −
+                      </button>
+                      <input type="number" id="pandoro" value="1" min="0" max="100" readonly
+                        class="w-8 text-center font-black text-lg text-slate-800 bg-transparent outline-none">
+                      <button type="button" onclick="updateDessert('pandoro', 1)" aria-label="Aumenta pandoro"
+                        class="w-9 h-9 rounded-lg bg-amber-600 text-white font-black text-lg hover:bg-amber-700 active:scale-95 transition flex items-center justify-center">
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Panettone -->
+                  <div class="bg-white border border-amber-200 rounded-xl p-3 flex items-center justify-between shadow-sm">
+                    <div>
+                      <div class="font-extrabold text-slate-800 text-sm">🎄 Panettone</div>
+                      <div class="text-[11px] font-semibold text-slate-500">Porzioni</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <button type="button" onclick="updateDessert('panettone', -1)" aria-label="Riduci panettone"
+                        class="w-9 h-9 rounded-lg bg-amber-50 border border-amber-300 text-amber-900 font-black text-lg hover:bg-amber-500 hover:text-white active:scale-95 transition flex items-center justify-center">
+                        −
+                      </button>
+                      <input type="number" id="panettone" value="0" min="0" max="100" readonly
+                        class="w-8 text-center font-black text-lg text-slate-800 bg-transparent outline-none">
+                      <button type="button" onclick="updateDessert('panettone', 1)" aria-label="Aumenta panettone"
+                        class="w-9 h-9 rounded-lg bg-amber-600 text-white font-black text-lg hover:bg-amber-700 active:scale-95 transition flex items-center justify-center">
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Allergie / Intolleranze -->
+              <div>
+                <label for="notes" class="block text-sm font-extrabold text-slate-700 mb-1.5">
+                  Eventuali allergie o intolleranze
+                </label>
+                <textarea id="notes" rows="2" placeholder="Es. Celiachia, allergia frutta a guscio, intolleranza al lattosio..."
+                  class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-green-600 focus:ring-4 focus:ring-green-100 outline-none transition font-medium text-slate-800 placeholder:text-slate-400"></textarea>
+              </div>
+
+              <!-- Riepilogo Dinamico Prezzo Totale -->
+              <div class="bg-gradient-to-r from-sky-50 to-amber-50 border-2 border-amber-300 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <div class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Riepilogo Prenotazione</div>
+                  <div id="summary-guests" class="text-sm font-bold text-slate-700">1 Adulto • 0 Bambini (Totale: 1 coperto)</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-xs font-bold text-slate-500">Totale previsto</div>
+                  <div id="summary-total" class="text-3xl font-black text-red-700">15€</div>
+                </div>
+              </div>
+
+              <!-- Messaggio errore validazione -->
+              <div id="form-error" class="hidden bg-red-50 border border-red-300 text-red-800 px-4 py-3 rounded-xl text-sm font-bold"></div>
+
+              <!-- Pulsante Invio -->
+              <button type="submit" id="submit-btn"
+                class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 text-white font-black text-lg shadow-lg shadow-red-700/25 active:scale-[0.99] transition flex items-center justify-center gap-2">
+                <span>🎄</span>
+                <span>Conferma Prenotazione Pranzo</span>
+              </button>
+            </form>
+
+            <!-- SCHERMATA DI CONFERMA POST-INVIO (nascosta inizialmente) -->
+            <div id="booking-success" class="hidden text-center py-4 space-y-5">
+              <div class="w-16 h-16 bg-green-100 text-green-700 rounded-full flex items-center justify-center mx-auto text-3xl border-2 border-green-300 shadow-sm">
+                ✅
+              </div>
+              <div>
+                <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-extrabold rounded-full uppercase">Prenotazione Registrata</span>
+                <h3 class="text-2xl sm:text-3xl font-black text-slate-800 mt-2">Grazie, <span id="conf-name" class="text-red-700"></span>!</h3>
+                <p class="text-slate-600 text-sm mt-1">Ti aspettiamo Sabato <strong>12 Dicembre 2026 alle ore 12:30</strong> al Centro Polivalente di San Didero.</p>
+              </div>
+
+              <div class="bg-amber-50/80 border-2 border-amber-300 rounded-2xl p-4 max-w-md mx-auto text-left space-y-2 text-sm">
+                <div class="flex justify-between border-b border-amber-200 pb-1.5">
+                  <span class="text-slate-500 font-bold">Codice Prenotazione:</span>
+                  <span id="conf-code" class="font-mono font-black text-red-700"></span>
+                </div>
+                <div class="flex justify-between border-b border-amber-200 pb-1.5">
+                  <span class="text-slate-500 font-bold">Partecipanti:</span>
+                  <span id="conf-guests" class="font-extrabold text-slate-800"></span>
+                </div>
+                <div class="flex justify-between border-b border-amber-200 pb-1.5">
+                  <span class="text-slate-500 font-bold">Dolci scelti:</span>
+                  <span id="conf-desserts" class="font-extrabold text-amber-900"></span>
+                </div>
+                <div class="flex justify-between border-b border-amber-200 pb-1.5">
+                  <span class="text-slate-500 font-bold">Contatto:</span>
+                  <span id="conf-contact" class="font-bold text-slate-800"></span>
+                </div>
+                <div id="conf-notes-row" class="hidden border-b border-amber-200 pb-1.5">
+                  <span class="text-slate-500 font-bold block">Allergie / Note:</span>
+                  <span id="conf-notes" class="font-semibold text-amber-900"></span>
+                </div>
+                <div class="flex justify-between pt-1 text-base">
+                  <span class="font-extrabold text-slate-700">Totale da saldare in loco:</span>
+                  <span id="conf-total" class="font-black text-green-800 text-lg"></span>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap justify-center gap-3 pt-2">
+                <button type="button" onclick="resetBookingForm()"
+                  class="px-5 py-3 rounded-xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-sm shadow transition">
+                  + Effettua un'altra prenotazione
+                </button>
+                <button type="button" onclick="switchTab('qr')"
+                  class="px-5 py-3 rounded-xl bg-sky-100 hover:bg-sky-200 text-sky-900 font-extrabold text-sm transition">
+                  📱 Condividi link con amici
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- VISTA 2: LINK DI CONDIVISIONE E CODICE QR                 -->
+    <!-- ========================================================= -->
+    <section id="view-qr" class="hidden max-w-2xl mx-auto">
+      <div class="bg-white rounded-3xl shadow-xl border-2 border-sky-100 p-6 sm:p-8 text-center relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-green-700 via-red-700 to-green-700"></div>
+
+        <span class="inline-block px-3 py-1 bg-sky-100 text-sky-800 text-xs font-extrabold rounded-full uppercase tracking-wider mb-2">
+          Materiale Promozionale Pro Loco
+        </span>
+        <h2 class="font-festive text-4xl sm:text-5xl text-red-700">Condividi il Modulo Prenotazioni</h2>
+        <p class="text-slate-600 text-sm sm:text-base mt-1 max-w-lg mx-auto">
+          Invia il link diretto su WhatsApp e Facebook oppure scarica il <strong>Codice QR</strong> da stampare su locandine, tavoli e volantini del Mercatino di Natale.
+        </p>
+
+        <!-- Box QR Code -->
+        <div class="my-6 inline-block p-5 bg-gradient-to-b from-amber-50 to-white rounded-3xl border-2 border-green-700 shadow-md">
+          <div class="text-xs font-black uppercase text-green-800 tracking-wider mb-3">
+            🎄 Pranzo Mercatino San Didero 🎄
+          </div>
+          <div id="qrcode-container" class="bg-white p-3 rounded-2xl border border-slate-200 flex items-center justify-center mx-auto w-[220px] h-[220px]"></div>
+          <div class="mt-3 text-xs font-extrabold text-red-700">
+            Inquadra per prenotare • 12 Dicembre 2026
+          </div>
+        </div>
+
+        <!-- Pulsante Scarica PNG -->
+        <div class="mb-6">
+          <button type="button" onclick="downloadQRCode()"
+            class="px-6 py-3.5 rounded-2xl bg-green-700 hover:bg-green-800 text-white font-extrabold text-sm sm:text-base shadow-lg shadow-green-700/20 transition inline-flex items-center gap-2">
+            <span>⬇️</span>
+            <span>Scarica Codice QR (PNG ad alta qualità)</span>
+          </button>
+        </div>
+
+        <!-- Link Diretto con Copia Rapida -->
+        <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 text-left">
+          <label for="share-url-input" class="block text-xs font-extrabold uppercase text-slate-500 mb-1.5">
+            Link diretto al form di prenotazione
+          </label>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input type="text" id="share-url-input" readonly
+              class="flex-1 px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-xs sm:text-sm font-mono text-slate-700 outline-none">
+            <button type="button" onclick="copyShareLink()" id="copy-btn"
+              class="px-5 py-2.5 rounded-xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-sm transition shrink-0 flex items-center justify-center gap-1.5">
+              <span>📋</span>
+              <span>Copia Link</span>
+            </button>
+          </div>
+          <p id="copy-feedback" class="hidden text-xs font-extrabold text-green-700 mt-2">
+            ✅ Link copiato negli appunti! Ora puoi incollarlo su WhatsApp o sui social.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- VISTA 3: AREA GESTIONALE PRO LOCO                         -->
+    <!-- ========================================================= -->
+    <section id="view-admin" class="hidden space-y-6">
+
+      <!-- Schermata Accesso Riservato Pro Loco (nessun indizio password visibile) -->
+      <div id="admin-login-box" class="max-w-md mx-auto bg-white rounded-3xl shadow-xl border-2 border-sky-100 p-6 sm:p-8 text-center relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-red-700 via-green-700 to-red-700"></div>
+        <div class="w-14 h-14 bg-red-50 text-red-700 rounded-2xl flex items-center justify-center mx-auto text-2xl border border-red-200 mb-3">
+          🔒
+        </div>
+        <h2 class="text-2xl font-black text-slate-800">Area Riservata Pro Loco</h2>
+        <p class="text-sm text-slate-500 mt-1 mb-6">Inserisci la password dell'organizzazione per accedere al gestionale delle prenotazioni.</p>
+
+        <form onsubmit="unlockAdmin(event)" class="space-y-4 text-left">
+          <div>
+            <label for="admin-password" class="block text-xs font-extrabold uppercase text-slate-600 mb-1.5">Password di accesso</label>
+            <input type="password" id="admin-password" required autocomplete="current-password" placeholder="Inserisci la password"
+              class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-red-600 focus:ring-4 focus:ring-red-100 outline-none font-bold text-slate-800">
+          </div>
+          <div id="admin-login-error" class="hidden bg-red-50 border border-red-200 text-red-700 px-3.5 py-2.5 rounded-xl text-xs font-extrabold">
+            Password non corretta. Riprova.
+          </div>
+          <button type="submit"
+            class="w-full py-3.5 rounded-xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-sm shadow-lg shadow-red-700/20 transition">
+            Accedi al Gestionale
+          </button>
+        </form>
+      </div>
+      
+      <!-- Dashboard Gestionale (nascosta finché non sbloccata) -->
+      <div id="admin-dashboard" class="hidden space-y-6">
+        
+        <!-- Header Dashboard e Azioni Rapide -->
+        <div class="bg-white rounded-3xl p-5 sm:p-6 border border-sky-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
+              <span id="sync-status" class="text-xs font-extrabold uppercase text-green-700">Sincronizzato in tempo reale</span>
+            </div>
+            <h2 class="text-2xl font-black text-slate-800 mt-0.5">Gestione Prenotazioni Pranzo</h2>
+            <p class="text-xs sm:text-sm text-slate-500">Sabato 12 Dicembre 2026 • Centro Polivalente San Didero</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" onclick="openManualModal()"
+              class="px-4 py-2.5 rounded-xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-xs sm:text-sm shadow-sm transition flex items-center gap-1.5">
+              <span>➕</span> <span>Nuova Manuale</span>
+            </button>
+            <button type="button" onclick="exportCSV()"
+              class="px-4 py-2.5 rounded-xl bg-green-700 hover:bg-green-800 text-white font-extrabold text-xs sm:text-sm shadow-sm transition flex items-center gap-1.5">
+              <span>📊</span> <span>Esporta CSV</span>
+            </button>
+            <button type="button" onclick="logoutAdmin()"
+              class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs sm:text-sm transition flex items-center gap-1.5" title="Blocca area gestionale">
+              <span>🔒</span> <span>Blocca / Esci</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+          <div class="bg-white rounded-2xl p-4 border border-sky-100 shadow-sm">
+            <div class="text-xs font-extrabold uppercase text-slate-400">Prenotazioni</div>
+            <div id="kpi-bookings" class="text-3xl font-black text-slate-800 mt-1">0</div>
+            <div class="text-xs font-semibold text-slate-500 mt-1">Gruppi / Famiglie</div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-sky-100 shadow-sm">
+            <div class="text-xs font-extrabold uppercase text-slate-400">Totale Coperti</div>
+            <div id="kpi-guests" class="text-3xl font-black text-red-700 mt-1">0</div>
+            <div id="kpi-guests-breakdown" class="text-xs font-bold text-slate-600 mt-1">0 Adulti • 0 Bambini</div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-sky-100 shadow-sm">
+            <div class="text-xs font-extrabold uppercase text-slate-400">Dolci Totali</div>
+            <div id="kpi-desserts" class="text-xl sm:text-2xl font-black text-amber-700 mt-1.5 leading-tight">0 Pand. / 0 Panet.</div>
+            <div id="kpi-desserts-sub" class="text-xs font-semibold text-slate-500 mt-1">Riepilogo cucina</div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-sky-100 shadow-sm">
+            <div class="text-xs font-extrabold uppercase text-slate-400">Incasso Previsto</div>
+            <div id="kpi-revenue" class="text-3xl font-black text-green-700 mt-1">0€</div>
+            <div id="kpi-paid" class="text-xs font-bold text-green-800 mt-1">Già saldato: 0€</div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-sky-100 shadow-sm col-span-2 lg:col-span-1">
+            <div class="text-xs font-extrabold uppercase text-slate-400">Allergie / Note</div>
+            <div id="kpi-allergies" class="text-3xl font-black text-amber-600 mt-1">0</div>
+            <div class="text-xs font-semibold text-slate-500 mt-1">Segnalazioni cucina</div>
+          </div>
+        </div>
+
+        <!-- Barra Ricerca e Filtri -->
+        <div class="bg-white rounded-2xl p-4 border border-sky-100 shadow-sm flex flex-col sm:flex-row gap-3 justify-between">
+          <div class="relative flex-1">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+            <input type="text" id="search-input" oninput="renderAdminTable()" placeholder="Cerca per nome, telefono o note..."
+              class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:border-red-600 outline-none text-sm font-semibold">
+          </div>
+
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" onclick="setFilter('all')" id="filter-all" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-slate-800 text-white transition">Tutte</button>
+            <button type="button" onclick="setFilter('unpaid')" id="filter-unpaid" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Da Saldare</button>
+            <button type="button" onclick="setFilter('paid')" id="filter-paid" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Pagate</button>
+            <button type="button" onclick="setFilter('notes')" id="filter-notes" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">⚠️ Allergie/Note</button>
+          </div>
+        </div>
+
+        <!-- Tabella Prenotazioni -->
+        <div class="bg-white rounded-3xl border border-sky-100 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
+                  <th class="py-3.5 px-4">Nominativo</th>
+                  <th class="py-3.5 px-3 text-center">Adulti (15€)</th>
+                  <th class="py-3.5 px-3 text-center">Bambini (10€)</th>
+                  <th class="py-3.5 px-3 text-center">Dolci</th>
+                  <th class="py-3.5 px-3 text-right">Totale</th>
+                  <th class="py-3.5 px-4">Contatto</th>
+                  <th class="py-3.5 px-4">Allergie / Note</th>
+                  <th class="py-3.5 px-4 text-center">Stato</th>
+                  <th class="py-3.5 px-4 text-right">Azioni</th>
+                </tr>
+              </thead>
+              <tbody id="bookings-tbody" class="divide-y divide-slate-100 text-sm">
+                <!-- Popolato dinamicamente via JS -->
+              </tbody>
+            </table>
+          </div>
+          <div id="empty-state" class="hidden py-12 text-center text-slate-400">
+            <div class="text-4xl mb-2">📭</div>
+            <p class="font-bold text-slate-600">Nessuna prenotazione trovata</p>
+            <p class="text-xs">Le nuove iscrizioni appariranno qui automaticamente in tempo reale.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- MODALE AGGIUNGI / MODIFICA PRENOTAZIONE MANUALE           -->
+  <!-- ========================================================= -->
+  <div id="manual-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border-2 border-sky-100">
+      <div class="flex items-center justify-between mb-4">
+        <h3 id="modal-title" class="text-xl font-black text-slate-800">Nuova Prenotazione Manuale</h3>
+        <button type="button" onclick="closeManualModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold">✕</button>
+      </div>
+
+      <form id="manual-form" onsubmit="saveManualBooking(event)" class="space-y-4">
+        <input type="hidden" id="edit-id">
+        <div>
+          <label class="block text-xs font-extrabold uppercase text-slate-600 mb-1">Nome e Cognome *</label>
+          <input type="text" id="m-name" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-red-600 outline-none font-bold text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-extrabold uppercase text-slate-600 mb-1">Contatto (Tel / WhatsApp / Email) *</label>
+          <input type="text" id="m-contact" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-red-600 outline-none font-bold text-sm">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-extrabold uppercase text-slate-600 mb-1">Adulti (15€)</label>
+            <input type="number" id="m-adults" min="0" max="50" value="1" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-red-600 outline-none font-black text-base">
+          </div>
+          <div>
+            <label class="block text-xs font-extrabold uppercase text-slate-600 mb-1">Bambini (10€)</label>
+            <input type="number" id="m-children" min="0" max="50" value="0" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-red-600 outline-none font-black text-base">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-extrabold uppercase text-amber-800 mb-1">⭐ Pandoro</label>
+            <input type="number" id="m-pandoro" min="0" max="100" value="1" required class="w-full px-3.5 py-2.5 rounded-xl border border-amber-300 bg-amber-50/40 focus:border-amber-600 outline-none font-black text-base">
+          </div>
+          <div>
+            <label class="block text-xs font-extrabold uppercase text-amber-800 mb-1">🎄 Panettone</label>
+            <input type="number" id="m-panettone" min="0" max="100" value="0" required class="w-full px-3.5 py-2.5 rounded-xl border border-amber-300 bg-amber-50/40 focus:border-amber-600 outline-none font-black text-base">
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-extrabold uppercase text-slate-600 mb-1">Allergie / Note</label>
+          <textarea id="m-notes" rows="2" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:border-red-600 outline-none text-sm"></textarea>
+        </div>
+        <div class="flex items-center gap-2 pt-1">
+          <input type="checkbox" id="m-paid" class="w-4 h-4 accent-green-700 rounded">
+          <label for="m-paid" class="text-sm font-bold text-slate-700">Segna come già pagato</label>
+        </div>
+
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="closeManualModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm">Annulla</button>
+          <button type="submit" class="flex-1 py-2.5 rounded-xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-sm shadow">Salva Prenotazione</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MODALE CONFERMA ELIMINAZIONE (NO browser confirm)         -->
+  <!-- ========================================================= -->
+  <div id="delete-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center">
+      <div class="w-12 h-12 rounded-full bg-red-100 text-red-700 flex items-center justify-center mx-auto text-2xl mb-3">🗑️</div>
+      <h3 class="text-lg font-black text-slate-800">Eliminare prenotazione?</h3>
+      <p id="delete-target-name" class="text-sm text-slate-600 mt-1 mb-5"></p>
+      <div class="flex gap-2">
+        <button type="button" onclick="closeDeleteModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm">Annulla</button>
+        <button type="button" id="confirm-delete-btn" class="flex-1 py-2.5 rounded-xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-sm">Elimina</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="max-w-5xl mx-auto px-4 py-8 text-center text-xs text-slate-500 space-y-1">
+    <p class="font-bold text-slate-700">Pro Loco di San Didero • Mercatino di Natale 12 Dicembre 2026</p>
+    <p>Centro Polivalente, Piazza Europa - San Didero (TO) • Info: 338 404 7634</p>
+  </footer>
+
+  <!-- ========================================================= -->
+  <!-- SCRIPT APPLICAZIONE & FIREBASE FIRESTORE                  -->
+  <!-- ========================================================= -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Configurazione Firebase ufficiale della Pro Loco
+    const firebaseConfig = {
+      apiKey: "AIzaSyBZqslwtrW0QiylVgx94UUqC_QKv8Agdv8",
+      authDomain: "pranzo-mercatino-natale.firebaseapp.com",
+      databaseURL: "https://pranzo-mercatino-natale-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "pranzo-mercatino-natale",
+      storageBucket: "pranzo-mercatino-natale.firebasestorage.app",
+      messagingSenderId: "185388110175",
+      appId: "1:185388110175:web:df22aa4196e0ee286826ea",
+      measurementId: "G-NM5306634L"
+    };
+
+    // Prezzi ufficiali dal volantino
+    const PRICE_ADULT = 15;
+    const PRICE_CHILD = 10;
+    const ADMIN_PASSWORD = 'proloconatale2026';
+
+    // Stato globale applicazione
+    let bookings = [];
+    let currentFilter = 'all';
+    let isAdminUnlocked = false;
+    let db = null;
+    let auth = null;
+    let currentUser = null;
+    let appId = typeof __app_id !== 'undefined' ? __app_id : 'proloco-sandidero-2026';
+    let useLocalStorageFallback = false;
+    let qrGenerated = false;
+
+    // Chiave salvataggio locale di riserva
+    const LOCAL_STORAGE_KEY = 'sandidero_natale_2026_bookings';
+
+    // =========================================================
+    // INIZIALIZZAZIONE FIREBASE / STORAGE
+    // =========================================================
+    async function initDatabase() {
+      try {
+        if (firebaseConfig && firebaseConfig.apiKey) {
+          const app = initializeApp(firebaseConfig);
+          auth = getAuth(app);
+          db = getFirestore(app);
+
+          if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+            await signInWithCustomToken(auth, __initial_auth_token);
+          } else {
+            await signInAnonymously(auth);
+          }
+
+          onAuthStateChanged(auth, (user) => {
+            if (user) {
+              currentUser = user;
+              subscribeToBookings();
+            } else {
+              signInAnonymously(auth).catch(err => {
+                console.warn("Autenticazione anonima fallita, attivo fallback:", err);
+                enableLocalFallback();
+              });
+            }
+          });
+        } else {
+          enableLocalFallback();
+        }
+      } catch (err) {
+        console.warn("Fallback su memoria locale attivato:", err);
+        enableLocalFallback();
+      }
+    }
+
+    function enableLocalFallback() {
+      useLocalStorageFallback = true;
+      const statusEl = document.getElementById('sync-status');
+      if (statusEl) {
+        statusEl.textContent = 'Modalità Locale (Browser)';
+        statusEl.className = 'text-xs font-extrabold uppercase text-amber-700';
+      }
+      loadLocalBookings();
+    }
+
+    function loadLocalBookings() {
+      try {
+        const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+        bookings = raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        bookings = [];
+      }
+      sortBookings();
+      updateDashboardUI();
+    }
+
+    function saveLocalBookings() {
+      try {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(bookings));
+      } catch (e) {
+        console.error("Errore salvataggio locale:", e);
+      }
+      sortBookings();
+      updateDashboardUI();
+    }
+
+    function subscribeToBookings() {
+      if (!db || !currentUser) {
+        enableLocalFallback();
+        return;
+      }
+      
+      const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'bookings');
+
+      onSnapshot(colRef, (snapshot) => {
+        bookings = [];
+        snapshot.forEach((docSnap) => {
+          bookings.push({ id: docSnap.id, ...docSnap.data() });
+        });
+        sortBookings();
+        updateDashboardUI();
+      }, (error) => {
+        console.warn("Errore connessione Firestore in tempo reale, attivo fallback locale:", error);
+        enableLocalFallback();
+      });
+    }
+
+    function sortBookings() {
+      bookings.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    }
+
+    // =========================================================
+    // NAVIGAZIONE TRA LE SCHEDE
+    // =========================================================
+    window.switchTab = function(tab) {
+      const views = ['form', 'qr', 'admin'];
+      views.forEach((v) => {
+        const viewEl = document.getElementById(`view-${v}`);
+        const navEl = document.getElementById(`nav-${v}`);
+        if (v === tab) {
+          viewEl.classList.remove('hidden');
+          navEl.classList.add('bg-red-700', 'text-white', 'shadow-sm');
+          navEl.classList.remove('text-slate-700', 'hover:bg-white/80');
+        } else {
+          viewEl.classList.add('hidden');
+          navEl.classList.remove('bg-red-700', 'text-white', 'shadow-sm');
+          navEl.classList.add('text-slate-700', 'hover:bg-white/80');
+        }
+      });
+
+      if (tab === 'qr') {
+        initQRCode();
+      }
+      if (tab === 'admin') {
+        if (isAdminUnlocked) {
+          document.getElementById('admin-login-box').classList.add('hidden');
+          document.getElementById('admin-dashboard').classList.remove('hidden');
+          renderAdminTable();
+        } else {
+          document.getElementById('admin-dashboard').classList.add('hidden');
+          document.getElementById('admin-login-box').classList.remove('hidden');
+          document.getElementById('admin-login-error').classList.add('hidden');
+          document.getElementById('admin-password').value = '';
+        }
+      }
+    };
+
+    // =========================================================
+    // LOGICA FORM DI PRENOTAZIONE PUBBLICO
+    // =========================================================
+    window.updateCount = function(field, delta) {
+      const input = document.getElementById(field);
+      let val = parseInt(input.value || '0', 10) + delta;
+      if (val < 0) val = 0;
+      if (val > 50) val = 50;
+      input.value = val;
+
+      // Mantiene allineate le porzioni di dolce al numero totale di coperti
+      const totalGuests = parseInt(document.getElementById('adults').value || '0', 10) +
+                          parseInt(document.getElementById('children').value || '0', 10);
+      const pandoroEl = document.getElementById('pandoro');
+      const panettoneEl = document.getElementById('panettone');
+      let pandoro = parseInt(pandoroEl.value || '0', 10);
+      let panettone = parseInt(panettoneEl.value || '0', 10);
+
+      if (pandoro + panettone < totalGuests) {
+        pandoro += (totalGuests - (pandoro + panettone));
+      } else if (pandoro + panettone > totalGuests) {
+        let excess = (pandoro + panettone) - totalGuests;
+        const reducePanettone = Math.min(panettone, excess);
+        panettone -= reducePanettone;
+        excess -= reducePanettone;
+        pandoro = Math.max(0, pandoro - excess);
+      }
+      pandoroEl.value = pandoro;
+      panettoneEl.value = panettone;
+
+      updateSummary();
+    };
+
+    window.updateDessert = function(type, delta) {
+      const totalGuests = parseInt(document.getElementById('adults').value || '0', 10) +
+                          parseInt(document.getElementById('children').value || '0', 10);
+      const pandoroEl = document.getElementById('pandoro');
+      const panettoneEl = document.getElementById('panettone');
+      let pandoro = parseInt(pandoroEl.value || '0', 10);
+      let panettone = parseInt(panettoneEl.value || '0', 10);
+
+      if (type === 'pandoro') {
+        const next = Math.max(0, Math.min(totalGuests, pandoro + delta));
+        pandoro = next;
+        if (pandoro + panettone > totalGuests) {
+          panettone = Math.max(0, totalGuests - pandoro);
+        }
+      } else {
+        const next = Math.max(0, Math.min(totalGuests, panettone + delta));
+        panettone = next;
+        if (pandoro + panettone > totalGuests) {
+          pandoro = Math.max(0, totalGuests - panettone);
+        }
+      }
+
+      pandoroEl.value = pandoro;
+      panettoneEl.value = panettone;
+      updateSummary();
+    };
+
+    function updateSummary() {
+      const adults = parseInt(document.getElementById('adults').value || '0', 10);
+      const children = parseInt(document.getElementById('children').value || '0', 10);
+      const pandoro = parseInt(document.getElementById('pandoro').value || '0', 10);
+      const panettone = parseInt(document.getElementById('panettone').value || '0', 10);
+      const totalGuests = adults + children;
+      const totalDesserts = pandoro + panettone;
+      const totalPrice = (adults * PRICE_ADULT) + (children * PRICE_CHILD);
+
+      const adultLabel = adults === 1 ? '1 Adulto' : `${adults} Adulti`;
+      const childLabel = children === 1 ? '1 Bambino' : `${children} Bambini`;
+      const guestLabel = totalGuests === 1 ? '1 coperto' : `${totalGuests} coperti`;
+
+      const hintEl = document.getElementById('dessert-counter-hint');
+      hintEl.textContent = `Scelti: ${totalDesserts} su ${totalGuests}`;
+      if (totalDesserts === totalGuests && totalGuests > 0) {
+        hintEl.className = 'text-xs font-extrabold text-green-800 bg-green-100 px-2.5 py-0.5 rounded-full';
+      } else {
+        hintEl.className = 'text-xs font-extrabold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full';
+      }
+
+      document.getElementById('summary-guests').textContent = `${adultLabel} • ${childLabel} (${guestLabel}) • ${pandoro} Pandoro, ${panettone} Panettone`;
+      document.getElementById('summary-total').textContent = `${totalPrice}€`;
+    }
+
+    document.getElementById('booking-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorBox = document.getElementById('form-error');
+      errorBox.classList.add('hidden');
+
+      const fullName = document.getElementById('fullName').value.trim();
+      const contact = document.getElementById('contact').value.trim();
+      const adults = parseInt(document.getElementById('adults').value || '0', 10);
+      const children = parseInt(document.getElementById('children').value || '0', 10);
+      const pandoro = parseInt(document.getElementById('pandoro').value || '0', 10);
+      const panettone = parseInt(document.getElementById('panettone').value || '0', 10);
+      const notes = document.getElementById('notes').value.trim();
+      const totalGuests = adults + children;
+
+      if (!fullName) {
+        errorBox.textContent = '⚠️ Inserisci il tuo Nome e Cognome per completare la prenotazione.';
+        errorBox.classList.remove('hidden');
+        document.getElementById('fullName').focus();
+        return;
+      }
+
+      if (!contact) {
+        errorBox.textContent = '⚠️ Inserisci un recapito telefonico (WhatsApp) o un indirizzo email.';
+        errorBox.classList.remove('hidden');
+        document.getElementById('contact').focus();
+        return;
+      }
+
+      if (totalGuests <= 0) {
+        errorBox.textContent = '⚠️ Seleziona almeno 1 partecipante (Adulto o Bambino).';
+        errorBox.classList.remove('hidden');
+        return;
+      }
+
+      if (pandoro + panettone !== totalGuests) {
+        errorBox.textContent = `⚠️ Seleziona il dolce per tutti i partecipanti (${pandoro + panettone} scelti su ${totalGuests} coperti).`;
+        errorBox.classList.remove('hidden');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>⏳</span> <span>Registrazione in corso...</span>';
+
+      const totalAmount = (adults * PRICE_ADULT) + (children * PRICE_CHILD);
+      const bookingCode = 'SD-' + Math.floor(1000 + Math.random() * 9000);
+
+      const newBooking = {
+        code: bookingCode,
+        fullName,
+        contact,
+        adults,
+        children,
+        pandoro,
+        panettone,
+        totalAmount,
+        notes,
+        paid: false,
+        source: 'Web / QR',
+        createdAt: Date.now()
+      };
+
+      try {
+        // Tentativo di scrittura prioritario su Firestore con timeout di sicurezza
+        let savedSuccessfully = false;
+        if (!useLocalStorageFallback && db) {
+          try {
+            const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'bookings');
+            await addDoc(colRef, newBooking);
+            savedSuccessfully = true;
+          } catch (cloudErr) {
+            console.warn("Scrittura cloud fallita, memorizzo in locale:", cloudErr);
+          }
+        }
+
+        if (!savedSuccessfully) {
+          newBooking.id = 'local_' + Date.now();
+          bookings.unshift(newBooking);
+          saveLocalBookings();
+        }
+
+        // Mostra messaggio di conferma e pulisce il modulo
+        document.getElementById('conf-name').textContent = fullName;
+        document.getElementById('conf-code').textContent = bookingCode;
+        document.getElementById('conf-guests').textContent = `${adults} Adulti, ${children} Bambini`;
+        document.getElementById('conf-desserts').textContent = `${pandoro} Pandoro, ${panettone} Panettone`;
+        document.getElementById('conf-contact').textContent = contact;
+        document.getElementById('conf-total').textContent = `${totalAmount}€`;
+
+        if (notes) {
+          document.getElementById('conf-notes').textContent = notes;
+          document.getElementById('conf-notes-row').classList.remove('hidden');
+        } else {
+          document.getElementById('conf-notes-row').classList.add('hidden');
+        }
+
+        document.getElementById('booking-form').reset();
+        document.getElementById('adults').value = 1;
+        document.getElementById('children').value = 0;
+        document.getElementById('pandoro').value = 1;
+        document.getElementById('panettone').value = 0;
+        updateSummary();
+
+        document.getElementById('booking-form').classList.add('hidden');
+        document.getElementById('booking-success').classList.remove('hidden');
+      } catch (err) {
+        console.error("Errore salvataggio prenotazione:", err);
+        errorBox.textContent = '❌ Si è verificato un errore durante la registrazione. Riprova tra qualche istante.';
+        errorBox.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>🎄</span> <span>Conferma Prenotazione Pranzo</span>';
+      }
+    });
+
+    window.resetBookingForm = function() {
+      document.getElementById('booking-success').classList.add('hidden');
+      document.getElementById('booking-form').classList.remove('hidden');
+    };
+
+    // =========================================================
+    // GENERATORE LINK E CODICE QR
+    // =========================================================
+    function getPublicShareUrl() {
+      const url = new URL(window.location.href);
+      url.hash = '';
+      return url.toString();
+    }
+
+    function initQRCode() {
+      const shareUrl = getPublicShareUrl();
+      document.getElementById('share-url-input').value = shareUrl;
+
+      if (!qrGenerated && typeof QRCode !== 'undefined') {
+        const container = document.getElementById('qrcode-container');
+        container.innerHTML = '';
+        new QRCode(container, {
+          text: shareUrl,
+          width: 192,
+          height: 192,
+          colorDark: '#14532d',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.H
+        });
+        qrGenerated = true;
+      }
+    }
+
+    window.copyShareLink = function() {
+      const input = document.getElementById('share-url-input');
+      input.select();
+      input.setSelectionRange(0, 99999);
+      try {
+        document.execCommand('copy');
+        const feedback = document.getElementById('copy-feedback');
+        feedback.classList.remove('hidden');
+        setTimeout(() => feedback.classList.add('hidden'), 4000);
+      } catch (e) {
+        console.error("Copia non riuscita:", e);
+      }
+    };
+
+    window.downloadQRCode = function() {
+      initQRCode();
+      const container = document.getElementById('qrcode-container');
+      const canvas = container.querySelector('canvas');
+      const img = container.querySelector('img');
+
+      let dataUrl = '';
+      if (canvas) {
+        dataUrl = canvas.toDataURL('image/png');
+      } else if (img && img.src) {
+        dataUrl = img.src;
+      }
+
+      if (dataUrl) {
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'QR_Pranzo_Natale_ProLoco_SanDidero_2026.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    };
+
+    // =========================================================
+    // AREA GESTIONALE PRO LOCO
+    // =========================================================
+    window.unlockAdmin = function(e) {
+      e.preventDefault();
+      const input = document.getElementById('admin-password');
+      const errorEl = document.getElementById('admin-login-error');
+
+      if (input.value === ADMIN_PASSWORD) {
+        isAdminUnlocked = true;
+        input.value = '';
+        errorEl.classList.add('hidden');
+        document.getElementById('admin-login-box').classList.add('hidden');
+        document.getElementById('admin-dashboard').classList.remove('hidden');
+        renderAdminTable();
+      } else {
+        errorEl.classList.remove('hidden');
+        input.focus();
+        input.select();
+      }
+    };
+
+    window.logoutAdmin = function() {
+      isAdminUnlocked = false;
+      document.getElementById('admin-dashboard').classList.add('hidden');
+      document.getElementById('admin-login-box').classList.remove('hidden');
+      document.getElementById('admin-password').value = '';
+      document.getElementById('admin-login-error').classList.add('hidden');
+    };
+
+    window.setFilter = function(filter) {
+      currentFilter = filter;
+      ['all', 'unpaid', 'paid', 'notes'].forEach((f) => {
+        const btn = document.getElementById(`filter-${f}`);
+        if (f === filter) {
+          btn.classList.add('bg-slate-800', 'text-white');
+          btn.classList.remove('bg-slate-100', 'text-slate-700', 'hover:bg-slate-200');
+        } else {
+          btn.classList.remove('bg-slate-800', 'text-white');
+          btn.classList.add('bg-slate-100', 'text-slate-700', 'hover:bg-slate-200');
+        }
+      });
+      renderAdminTable();
+    };
+
+    function updateDashboardUI() {
+      let totalAdults = 0;
+      let totalChildren = 0;
+      let totalPandoro = 0;
+      let totalPanettone = 0;
+      let totalRevenue = 0;
+      let paidRevenue = 0;
+      let notesCount = 0;
+
+      bookings.forEach((b) => {
+        const a = Number(b.adults || 0);
+        const c = Number(b.children || 0);
+        const rev = Number(b.totalAmount || (a * PRICE_ADULT + c * PRICE_CHILD));
+        totalAdults += a;
+        totalChildren += c;
+        totalPandoro += Number(b.pandoro || 0);
+        totalPanettone += Number(b.panettone || 0);
+        totalRevenue += rev;
+        if (b.paid) paidRevenue += rev;
+        if (b.notes && b.notes.trim().length > 0) notesCount++;
+      });
+
+      const totalGuests = totalAdults + totalChildren;
+
+      // Aggiorna badge navbar e KPI
+      document.getElementById('badge-count').textContent = totalGuests;
+      document.getElementById('kpi-bookings').textContent = bookings.length;
+      document.getElementById('kpi-guests').textContent = totalGuests;
+      document.getElementById('kpi-guests-breakdown').textContent = `${totalAdults} Adulti • ${totalChildren} Bambini`;
+      document.getElementById('kpi-desserts').textContent = `${totalPandoro} Pand. / ${totalPanettone} Panet.`;
+      document.getElementById('kpi-revenue').textContent = `${totalRevenue}€`;
+      document.getElementById('kpi-paid').textContent = `Già saldato: ${paidRevenue}€`;
+      document.getElementById('kpi-allergies').textContent = notesCount;
+
+      if (isAdminUnlocked) {
+        renderAdminTable();
+      }
+    }
+
+    window.renderAdminTable = function() {
+      const tbody = document.getElementById('bookings-tbody');
+      const emptyState = document.getElementById('empty-state');
+      const query = (document.getElementById('search-input').value || '').toLowerCase().trim();
+
+      const filtered = bookings.filter((b) => {
+        if (currentFilter === 'paid' && !b.paid) return false;
+        if (currentFilter === 'unpaid' && b.paid) return false;
+        if (currentFilter === 'notes' && (!b.notes || !b.notes.trim())) return false;
+
+        if (query) {
+          const hay = `${b.fullName || ''} ${b.contact || ''} ${b.notes || ''} ${b.code || ''}`.toLowerCase();
+          if (!hay.includes(query)) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      tbody.innerHTML = filtered.map((b) => {
+        const a = Number(b.adults || 0);
+        const c = Number(b.children || 0);
+        const pand = Number(b.pandoro || 0);
+        const panet = Number(b.panettone || 0);
+        const tot = Number(b.totalAmount || (a * PRICE_ADULT + c * PRICE_CHILD));
+        const hasNotes = b.notes && b.notes.trim().length > 0;
+
+        return `
+          <tr class="hover:bg-sky-50/50 transition">
+            <td class="py-3.5 px-4">
+              <div class="font-extrabold text-slate-800">${escapeHtml(b.fullName)}</div>
+              <div class="text-[11px] font-mono text-slate-400">${escapeHtml(b.code || '')} • ${escapeHtml(b.source || 'Web')}</div>
+            </td>
+            <td class="py-3.5 px-3 text-center font-extrabold text-red-700">${a}</td>
+            <td class="py-3.5 px-3 text-center font-extrabold text-green-700">${c}</td>
+            <td class="py-3.5 px-3 text-center">
+              <span class="inline-block px-2 py-0.5 rounded-lg bg-amber-50 border border-amber-200 text-xs font-extrabold text-amber-900 whitespace-nowrap">
+                ⭐ ${pand} • 🎄 ${panet}
+              </span>
+            </td>
+            <td class="py-3.5 px-3 text-right font-black text-slate-800">${tot}€</td>
+            <td class="py-3.5 px-4 font-semibold text-slate-700">${escapeHtml(b.contact)}</td>
+            <td class="py-3.5 px-4 max-w-xs">
+              ${hasNotes
+                ? `<span class="inline-block px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 text-xs font-bold">⚠️ ${escapeHtml(b.notes)}</span>`
+                : `<span class="text-xs text-slate-400">—</span>`}
+            </td>
+            <td class="py-3.5 px-4 text-center">
+              <button type="button" onclick="togglePaid('${b.id}')"
+                class="px-3 py-1 rounded-full text-xs font-extrabold transition ${
+                  b.paid
+                    ? 'bg-green-100 text-green-800 border border-green-300 hover:bg-green-200'
+                    : 'bg-amber-100 text-amber-800 border border-amber-300 hover:bg-amber-200'
+                }">
+                ${b.paid ? '✅ Pagato' : '⏳ Da saldare'}
+              </button>
+            </td>
+            <td class="py-3.5 px-4 text-right whitespace-nowrap">
+              <button type="button" onclick="editBooking('${b.id}')" title="Modifica"
+                class="p-2 rounded-lg bg-slate-100 hover:bg-sky-100 text-slate-700 hover:text-sky-800 transition mr-1">
+                ✏️
+              </button>
+              <button type="button" onclick="askDeleteBooking('${b.id}')" title="Elimina"
+                class="p-2 rounded-lg bg-slate-100 hover:bg-red-100 text-slate-700 hover:text-red-700 transition">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    };
+
+    window.togglePaid = async function(id) {
+      const target = bookings.find((b) => b.id === id);
+      if (!target) return;
+      const nextPaid = !target.paid;
+
+      try {
+        if (!useLocalStorageFallback && db && currentUser) {
+          const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'bookings', id);
+          await updateDoc(docRef, { paid: nextPaid });
+        } else {
+          target.paid = nextPaid;
+          saveLocalBookings();
+        }
+      } catch (err) {
+        console.error("Errore aggiornamento pagamento:", err);
+      }
+    };
+
+    // =========================================================
+    // MODALE AGGIUNTA / MODIFICA MANUALE & ELIMINAZIONE
+    // =========================================================
+    window.openManualModal = function() {
+      document.getElementById('edit-id').value = '';
+      document.getElementById('modal-title').textContent = 'Nuova Prenotazione Manuale';
+      document.getElementById('manual-form').reset();
+      document.getElementById('m-adults').value = 1;
+      document.getElementById('m-children').value = 0;
+      document.getElementById('m-pandoro').value = 1;
+      document.getElementById('m-panettone').value = 0;
+      document.getElementById('manual-modal').classList.remove('hidden');
+    };
+
+    window.editBooking = function(id) {
+      const b = bookings.find((item) => item.id === id);
+      if (!b) return;
+      document.getElementById('edit-id').value = b.id;
+      document.getElementById('modal-title').textContent = 'Modifica Prenotazione';
+      document.getElementById('m-name').value = b.fullName || '';
+      document.getElementById('m-contact').value = b.contact || '';
+      document.getElementById('m-adults').value = b.adults ?? 1;
+      document.getElementById('m-children').value = b.children ?? 0;
+      document.getElementById('m-pandoro').value = b.pandoro ?? 0;
+      document.getElementById('m-panettone').value = b.panettone ?? 0;
+      document.getElementById('m-notes').value = b.notes || '';
+      document.getElementById('m-paid').checked = Boolean(b.paid);
+      document.getElementById('manual-modal').classList.remove('hidden');
+    };
+
+    window.closeManualModal = function() {
+      document.getElementById('manual-modal').classList.add('hidden');
+    };
+
+    window.saveManualBooking = async function(e) {
+      e.preventDefault();
+      const editId = document.getElementById('edit-id').value;
+      const fullName = document.getElementById('m-name').value.trim();
+      const contact = document.getElementById('m-contact').value.trim();
+      const adults = parseInt(document.getElementById('m-adults').value || '0', 10);
+      const children = parseInt(document.getElementById('m-children').value || '0', 10);
+      const pandoro = parseInt(document.getElementById('m-pandoro').value || '0', 10);
+      const panettone = parseInt(document.getElementById('m-panettone').value || '0', 10);
+      const notes = document.getElementById('m-notes').value.trim();
+      const paid = document.getElementById('m-paid').checked;
+
+      if (!fullName || !contact || (adults + children <= 0)) return;
+
+      const totalAmount = (adults * PRICE_ADULT) + (children * PRICE_CHILD);
+
+      try {
+        if (editId) {
+          if (!useLocalStorageFallback && db && currentUser) {
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'bookings', editId);
+            await updateDoc(docRef, { fullName, contact, adults, children, pandoro, panettone, totalAmount, notes, paid });
+          } else {
+            const idx = bookings.findIndex((b) => b.id === editId);
+            if (idx !== -1) {
+              bookings[idx] = { ...bookings[idx], fullName, contact, adults, children, pandoro, panettone, totalAmount, notes, paid };
+              saveLocalBookings();
+            }
+          }
+        } else {
+          const newEntry = {
+            code: 'SD-' + Math.floor(1000 + Math.random() * 9000),
+            fullName,
+            contact,
+            adults,
+            children,
+            pandoro,
+            panettone,
+            totalAmount,
+            notes,
+            paid,
+            source: 'Segreteria / WA',
+            createdAt: Date.now()
+          };
+          if (!useLocalStorageFallback && db && currentUser) {
+            const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'bookings');
+            await addDoc(colRef, newEntry);
+          } else {
+            newEntry.id = 'local_' + Date.now();
+            bookings.unshift(newEntry);
+            saveLocalBookings();
+          }
+        }
+        closeManualModal();
+      } catch (err) {
+        console.error("Errore salvataggio manuale:", err);
+      }
+    };
+
+    let pendingDeleteId = null;
+
+    window.askDeleteBooking = function(id) {
+      const b = bookings.find((item) => item.id === id);
+      if (!b) return;
+      pendingDeleteId = id;
+      document.getElementById('delete-target-name').textContent =
+        `Stai per eliminare la prenotazione di "${b.fullName}" (${Number(b.adults || 0) + Number(b.children || 0)} coperti).`;
+      document.getElementById('delete-modal').classList.remove('hidden');
+    };
+
+    window.closeDeleteModal = function() {
+      pendingDeleteId = null;
+      document.getElementById('delete-modal').classList.add('hidden');
+    };
+
+    document.getElementById('confirm-delete-btn').addEventListener('click', async () => {
+      if (!pendingDeleteId) return;
+      const id = pendingDeleteId;
+      closeDeleteModal();
+
+      try {
+        if (!useLocalStorageFallback && db && currentUser) {
+          const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'bookings', id);
+          await deleteDoc(docRef);
+        } else {
+          bookings = bookings.filter((b) => b.id !== id);
+          saveLocalBookings();
+        }
+      } catch (err) {
+        console.error("Errore eliminazione:", err);
+      }
+    });
+
+    // =========================================================
+    // ESPORTAZIONE CSV PER STAMPA / EXCEL
+    // =========================================================
+    window.exportCSV = function() {
+      const headers = ['Codice', 'Nome e Cognome', 'Adulti (15€)', 'Bambini (10€)', 'Totale Coperti', 'Pandoro', 'Panettone', 'Importo (€)', 'Stato Pagamento', 'Contatto', 'Allergie e Note', 'Origine'];
+      const rows = bookings.map((b) => {
+        const a = Number(b.adults || 0);
+        const c = Number(b.children || 0);
+        const pand = Number(b.pandoro || 0);
+        const panet = Number(b.panettone || 0);
+        const tot = Number(b.totalAmount || (a * PRICE_ADULT + c * PRICE_CHILD));
+        return [
+          b.code || '',
+          b.fullName || '',
+          a,
+          c,
+          a + c,
+          pand,
+          panet,
+          tot,
+          b.paid ? 'Pagato' : 'Da saldare',
+          b.contact || '',
+          (b.notes || '').replace(/\r?\n/g, ' '),
+          b.source || 'Web'
+        ].map((val) => `"${String(val).replace(/"/g, '""')}"`).join(';');
+      });
+
+      const csvContent = '\uFEFF' + [headers.join(';'), ...rows].join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Prenotazioni_Pranzo_Natale_SanDidero_2026.csv';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    };
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Avvio iniziale
+    updateSummary();
+    initDatabase();
+  </script>
+</body>
+</html>
